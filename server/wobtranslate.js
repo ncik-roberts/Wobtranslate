@@ -92,7 +92,7 @@ app.get('/sentence', function (request, response) {
   }
 });
 
-http.createServer(app).listen(8000);
+http.createServer(app).listen(process.env.PORT || 8000);
 
 //Return array of results of those promises that succeeded.
 //Otherwise, returns array of all errors
