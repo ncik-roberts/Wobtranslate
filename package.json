@@ -1,0 +1,20 @@
+{
+  "title": "Wobtranslate",
+  "name": "wobtranslate",
+  "version": "0.0.1",
+  "description": "Save words in any language with translations, definitions, and example sentences. Exports to Anki-friendly formats.",
+  "main": "index.js",
+  "author": "Nick Roberts",
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "license": "MIT",
+  "keywords": [
+    "jetpack"
+  ],
+  "dependencies": {
+    "express": "~4.14.0",
+    "promise": "~7.1.1"
+  }
+}
