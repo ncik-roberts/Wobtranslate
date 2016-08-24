@@ -24,7 +24,8 @@ var Glosbe = new GlosbeWrapper(Request, Promise);
 /* Create bing wrapper likewise */
 var BingWrapper = require('../api/bing-wrapper.js').Wrapper;
 var parseString = require('xml2js').parseString;
-var config = require('./config.js');
+/* Grab config values from heroku */
+var config = process.env;
 var Bing = new BingWrapper(Request, Promise, parseString, config.clientID, config.clientSecret);
 
 app.all('/', function (request, response) {
