@@ -1,0 +1,26 @@
+{
+  "title": "Wobtranslate",
+  "name": "wobtranslate",
+  "version": "0.0.1",
+  "description": "Save words in any language with translations, definitions, and example sentences. Exports to Anki-friendly formats.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/wobtranslate.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "firefox": ">=38.0a1",
+    "fennec": ">=38.0a1"
+  },
+  "dependencies": {
+    "express": "^4.9.8",
+    "request": "^2.10.0",
+    "xml2js":  "^0.4.17",
+    "promise": "^7.0.0"
+  },
+  "author": "Nick Roberts",
+  "license": "MIT",
+  "keywords": [
+    "translator", "translation", "language"
+  ]
+}

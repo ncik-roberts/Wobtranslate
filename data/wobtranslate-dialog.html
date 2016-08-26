@@ -1,0 +1,109 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style type="text/css">
+legend {
+  font-weight: bold;
+}
+
+select, input {
+  display: block;
+}
+
+label {
+  display: block;
+  padding-bottom: 9px;
+}
+
+body {
+  white-space: nowrap;
+}
+
+.column {
+  display: inline-block;
+  white-space: normal;
+  vertical-align: top;
+}
+
+#right {
+  border-left: thick solid #ff000;
+  text-align: center;
+}
+
+.error {
+  color: red;
+}
+
+.arrow {
+  cursor: pointer;
+  font-size: 20pt;
+}
+
+.title {
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+<div class="column">
+  <fieldset>
+    <legend>
+      Wobtranslate
+    </legend>
+    <label>
+      Word or phrase to translate:
+      <input maxlength="100" type="text" name="phrase" id="phrase" />
+    </label>
+    <label>
+      Language to translate from:
+      <select name="from" id="from">
+        <option value="ar">Arabic (العَرَبِيَّة)</option>
+        <option value="en" selected>English</option>
+        <option value="fr">French (français)</option>
+        <option value="jpn">Japanese (日本語)</option>
+        <option value="kor">Korean (한국어)</option>
+        <option value="cmn">Mandarin (官话)</option>
+        <option value="rus">Russian (ру́сский язы́к)</option>
+        <option value="es">Spanish (español)</option>
+        <option value="">Detect language...</option>
+        <option value="enter">Enter ISO 693-3 code...</option>
+      </select>
+    </label>
+    <label>
+      Language to translate to:
+      <select name="to" id="to">
+        <option value="ar">Arabic (العَرَبِيَّة)</option>
+        <option value="en">English</option>
+        <option value="fr">French (français)</option>
+        <option value="jpn">Japanese (日本語)</option>
+        <option value="kor">Korean (한국어)</option>
+        <option value="cmn">Mandarin (官话)</option>
+        <option value="rus">Russian (ру́сский язы́к)</option>
+        <option value="es" selected>Spanish (español)</option>
+        <option value="enter">Enter ISO 693-3 code...</option>
+      </select>
+    </label>
+  </fieldset>
+  <button id="save-defaults">Save Defaults</button>
+</div>
+<div id="right" class="column">
+  <span id="translationtitle" class="title">Translation</span><br/>
+  <span class="arrow" id="prevtranslation">&#9664;</span>
+  <textarea cols="30" rows="1" id="translation"></textarea>
+  <span class="arrow" id="nexttranslation">&#9654;</span>
+  <br /><br />
+  <span id="sentencetitle" class="title">Sentence</span><br/>
+  <span class="arrow" id="prevsentence">&#9664;</span>
+  <textarea cols="30" rows="1" id="sentence"></textarea>
+  <span class="arrow" id="nextsentence">&#9654;</span>
+  <br />
+  <textarea cols="30" rows="1" id="sentenceTranslation"></textarea>
+  <br />
+  <button id="save-translation">Save Translation</button>
+  <br />
+  <button id="export-saved">Export Saved Translations</button>
+</div>
+<div class="error" id="error">
+</div>
+</body>
+</html>
