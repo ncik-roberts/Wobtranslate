@@ -12,6 +12,8 @@ var $sentenceTranslation = $('#sentenceTranslation');
 var $error = $('#error');
 var $translationTitle = $('#translationtitle');
 var $sentenceTitle = $('#sentencetitle');
+var $translationSource = $('#translationsource');
+var $sentenceSource = $('#sentencesource');
 
 var translations = [];
 var sentences = [];
@@ -94,13 +96,13 @@ $('#save-translation').on('click', function () {
   var trans = { phrase: $phrase.val() };
   if (translation || $translation.data('changed')) {
     trans.translation = $translation.val();
-    trans.translationAuthor = translation ? translation.authors : "";
+    trans.translationAuthor = translation ? translation.authors : translation.source;
   }
 
   if (sentence || $sentence.data('changed')) {
     trans.fromSentence = $sentence.val();
     trans.toSentence = $sentenceTranslation.val();
-    trans.sentenceAuthor = sentence ? sentence.author : "";
+    trans.sentenceAuthor = sentence ? sentence.author : sentence.source;
   }
 
   self.port.emit('addstore', 'translations', trans);
@@ -160,9 +162,17 @@ function request() {
 function showTranslation() {
   if (translationIndex >= translations.length) {
     $translation.val("No translation found.");
+    $translationSource.off('click');
     $translation.data('changed', false);
   } else {
-    $translation.val(translations[translationIndex].translation);
+    var t = translations[translationIndex];
+    $translation.val(t.translation);
+    $translationSource.text("Source: " + t.source);
+    $translationSource.on('click', function () {
+      if (t.url) {
+        window.open(t.url);
+      }
+    });
   }
 }
 
@@ -174,9 +184,19 @@ function showSentence() {
     //Set fields that are useful in determining what to save
     $sentence.data('changed', false);
     $sentenceTranslation.data('changed', false);
+    $sentenceSource.off('click');
   } else {
-    $sentence.val(sentences[sentenceIndex].fromSentence);
-    $sentenceTranslation.val(sentences[sentenceIndex].toSentence);
+    var s = sentences[sentenceIndex];
+    $sentence.val(s.fromSentence);
+    $sentenceTranslation.val(s.toSentence);
+    $sentenceSource.text("Source: " + s.source);
+    $sentenceSource.on('click', function () {
+      if (s.url) {
+        window.open(s.url);
+      } else if (s.authors) {
+        window.open(s.authors[0].url);
+      }
+    });
   }
 }
 

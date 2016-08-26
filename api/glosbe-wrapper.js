@@ -150,7 +150,7 @@ function glosbeTranslateJsonToArray(data) {
     });
     return {
       translation: tucElement.phrase.text,
-      source: "glosbe",
+      source: "Glosbe",
       authors: authors
     }
   });
@@ -163,6 +163,7 @@ function glosbeTranslateJsonToArray(data) {
  *  Array whose elements have properties:
  *    toSentence   (string) Sentence containing `phrase` in `to` language
  *    fromSentence (string) Sentence containing `phrase` in `from` language
+ *    source       (string) Name of website source (Glosbe)
  *    author       (object) object having properties
  *      url          (string) URL of source on glosbe
  *      id           (int)    unique author id on glosbe
@@ -173,6 +174,7 @@ function glosbeTMJsonToArray(data) {
     return {
       fromSentence: example.first,
       toSentence: example.second,
+      source: "Glosbe",
       author: {
         id: example.author,
         url: "https://www.glosbe.com/source/" + example.author

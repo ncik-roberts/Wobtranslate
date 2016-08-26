@@ -39,6 +39,12 @@ body {
   font-size: 20pt;
 }
 
+.source {
+  font-style: italic;
+  color: #666;
+  cursor: pointer;
+}
+
 .title {
   font-weight: bold;
 }
@@ -87,12 +93,16 @@ body {
   <button id="save-defaults">Save Defaults</button>
 </div>
 <div id="right" class="column">
-  <span id="translationtitle" class="title">Translation</span><br/>
+  <span id="translationtitle" class="title">Translation</span>
+  <span class="source" id="translationsource"></span>
+  <br/>
   <span class="arrow" id="prevtranslation">&#9664;</span>
   <textarea cols="30" rows="1" id="translation"></textarea>
   <span class="arrow" id="nexttranslation">&#9654;</span>
-  <br /><br />
-  <span id="sentencetitle" class="title">Sentence</span><br/>
+  <br />
+  <span id="sentencetitle" class="title">Sentence</span>
+  <span class="source" id="sentencesource"></span>
+  <br/>
   <span class="arrow" id="prevsentence">&#9664;</span>
   <textarea cols="30" rows="1" id="sentence"></textarea>
   <span class="arrow" id="nextsentence">&#9654;</span>

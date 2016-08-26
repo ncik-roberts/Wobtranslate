@@ -19,11 +19,7 @@ exports.Wrapper = function (Request, Promise, parseString, clientID, clientSecre
    *  PROMISE that, on success, returns an object with the following properties:
    *    translation (string)  Text of the translation in `to` language
    *    source      (string)  Source of translation (bing)
-   *    authors     (object array) array of single object having properties
-   *      url         (string)     https://www.microsoft.com/en-us/translator/translatorapi.aspx
-   *
-   * Now, you're probably wondering, why would we have an authors array with only one element?
-   * The answer is, unsatisfyingly, to stay consistent with Glosbe.
+   *    url         (string)  https://www.microsoft.com/en-us/translator/translatorapi.aspx
    */
   this.translate = function (x) {
     if (!x) {
@@ -64,8 +60,8 @@ exports.Wrapper = function (Request, Promise, parseString, clientID, clientSecre
         } else {
           resolve({
             translation: result.string._,
-            source: "bing",
-            authors: [ { url: "https://www.microsoft.com/en-us/translator/translatorapi.aspx" } ]
+            source: "Bing",
+            url: "https://www.microsoft.com/en-us/translator/translatorapi.aspx"
           });
         }
       });
