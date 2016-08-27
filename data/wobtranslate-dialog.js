@@ -8,12 +8,12 @@ var $to = $('#to');
 var $from = $('#from');
 var $translation = $('#translation');
 var $sentence = $('#sentence');
-var $sentenceTranslation = $('#sentenceTranslation');
+var $sentenceTranslation = $('#sentence-translation');
 var $error = $('#error');
-var $translationTitle = $('#translationtitle');
-var $sentenceTitle = $('#sentencetitle');
-var $translationSource = $('#translationsource');
-var $sentenceSource = $('#sentencesource');
+var $translationTitle = $('#translation-title');
+var $sentenceTitle = $('#sentence-title');
+var $translationSource = $('#translation-source');
+var $sentenceSource = $('#sentence-source');
 
 var translations = [];
 var sentences = [];
@@ -29,7 +29,7 @@ var width = 510, height = 260;
 $error.width(width + 'px');
 
 //If any fields are changed, request translation
-$('fieldset > input, fieldset > selector').on('change', request);
+$('fieldset input, fieldset selector').on('change', request);
 
 $('#to, #from').off().on('change', function () {
   if (this.value === "enter") {
@@ -58,25 +58,25 @@ function addInput(ontoElement) {
 }
 
 //Set onclick events for moving among translations
-$('#prevsentence').on('click', function () {
+$('#prev-sentence').on('click', function () {
   sentenceIndex--;
   sentenceIndex = adjust(sentenceIndex, sentences);
   showSentence();
 });
 
-$('#nextsentence').on('click', function () {
+$('#next-sentence').on('click', function () {
   sentenceIndex++;
   sentenceIndex = adjust(sentenceIndex, sentences);
   showSentence();
 });
 
-$('#prevtranslation').on('click', function () {
+$('#prev-translation').on('click', function () {
   translationIndex--;
   translationIndex = adjust(translationIndex, translations);
   showTranslation();
 });
 
-$('#nexttranslation').on('click', function () {
+$('#next-translation').on('click', function () {
   translationIndex++;
   translationIndex = adjust(translationIndex, translations);
   showTranslation();
@@ -96,17 +96,17 @@ $('#save-translation').on('click', function () {
   var trans = { phrase: $phrase.val() };
   if (translation || $translation.data('changed')) {
     trans.translation = $translation.val();
-    trans.translationAuthor = translation ? translation.authors : translation.source;
+    trans.translationUrl = translation.url || (translation.authors && translation.authors[0].url) || "";
   }
 
   if (sentence || $sentence.data('changed')) {
     trans.fromSentence = $sentence.val();
     trans.toSentence = $sentenceTranslation.val();
-    trans.sentenceAuthor = sentence ? sentence.author : sentence.source;
+    trans.sentenceUrl = sentence.author.url;
   }
 
   self.port.emit('addstore', 'translations', trans);
-  alert("Translation saved for '" + phrase + "'!");
+  alert("Translation saved for '" + trans.phrase + "'!");
 });
 
 $('#export-saved').on('click', function () {
@@ -140,6 +140,8 @@ self.port.on('focus', function (phraseText) {
   request();
 });
 
+self.port.on('restore', clearError);
+
 function getCode($elem) {
   var code = $elem.next('input[name="code"]');
   if (code.length) {
@@ -168,9 +170,11 @@ function showTranslation() {
     var t = translations[translationIndex];
     $translation.val(t.translation);
     $translationSource.text("Source: " + t.source);
-    $translationSource.on('click', function () {
+    $translationSource.off('click').on('click', function () {
       if (t.url) {
         window.open(t.url);
+      } else if (t.authors) {
+        window.open(t.authors[0].url);
       }
     });
   }
@@ -190,11 +194,9 @@ function showSentence() {
     $sentence.val(s.fromSentence);
     $sentenceTranslation.val(s.toSentence);
     $sentenceSource.text("Source: " + s.source);
-    $sentenceSource.on('click', function () {
-      if (s.url) {
-        window.open(s.url);
-      } else if (s.authors) {
-        window.open(s.authors[0].url);
+    $sentenceSource.off('click').on('click', function () {
+      if (s.author && s.author.url) {
+        window.open(s.author.url);
       }
     });
   }

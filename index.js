@@ -20,17 +20,26 @@ function createWobtranslateDialog(selection) {
   wobtranslate.port.emit('focus', selection);
 }
 
+//Show wobtranslate screen without changing text/requesting
+function restoreWobtranslateDialog() {
+  wobtranslate.show();
+  wobtranslate.port.emit('restore');
+}
+
 //Create menu to show up during right click
 var menuItem = contextMenu.Item({
   label: "Wobtranslate",
   accessKey: "w",
-  context: contextMenu.SelectionContext(),
   contentScript: 'self.on("click", function () {' +
                  '  var text = window.getSelection().toString();' +
                  '  self.postMessage(text);' +
                  '});',
   onMessage: function (selectionText) {
-    createWobtranslateDialog(selectionText);
+    if (selectionText) {
+      createWobtranslateDialog(selectionText);
+    } else {
+      restoreWobtranslateDialog();
+    }
   }
 });
 
@@ -97,6 +106,14 @@ ss.on('OverQuota', function () {
 });
 
 /******** DOWNLOADING CSV ********/
+function csvEncode(str) {
+  if (str.indexOf(',') === -1
+   && str.indexOf('"') === -1
+   && str.indexOf("\n") === -1) {
+    return str;
+  }
+  return '"' + str.replace(/"/, '""') + '"';
+}
 wobtranslate.port.on('download', function (key) {
   var array = ss.storage[key];
   if (!array || !array.length) {
@@ -111,7 +128,7 @@ wobtranslate.port.on('download', function (key) {
   for (var i = 0; i < array.length; i++) {
     csvContent += "\n" + keys.map(function (key) {
       if (array[i][key] === undefined) return "";
-      return JSON.stringify(array[i][key]);
+      return csvEncode(array[i][key]);
     }).join(",");
   }
 
